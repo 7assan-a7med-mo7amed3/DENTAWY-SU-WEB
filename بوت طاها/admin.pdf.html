@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin PDF</title>
+<style>
+body { text-align: center; font-family: "Macondo", cursive; padding: 20px; }
+input, button { padding: 10px; margin: 5px; border-radius: 10px; }
+.card-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 20px; }
+.card { padding: 10px; border: 2px solid black; border-radius: 15px; background: #f0f0f0; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<h2>Add PDF</h2>
+<input type="text" id="titleInput" placeholder="PDF Title"><br>
+<input type="file" id="pdfInput" accept="application/pdf"><br>
+<button onclick="addPDF()">Add PDF</button>
+
+<h2>Current PDFs</h2>
+<div class="card-container" id="cardContainer"></div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+// Firebase config
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  databaseURL: "https://mypdf-c6cb1-default-rtdb.firebaseio.com/",
+  projectId: "YOUR_PROJECT",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "XXXX",
+  appId: "XXXX"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+function addPDF() {
+  const title = document.getElementById("titleInput").value;
+  const file = document.getElementById("pdfInput").files[0];
+  if(!title || !file) { alert("Title & PDF required!"); return; }
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const pdfBase64 = e.target.result;
+    db.ref("pdfs").push({ title, pdfBase64 }, err => {
+      if(!err){
+        alert("PDF added!");
+        document.getElementById("titleInput").value = "";
+        document.getElementById("pdfInput").value = "";
+        loadPDFs(); // حدث القائمة بعد الإضافة
+      }
+    });
+  };
+  reader.readAsDataURL(file);
+}
+
+function loadPDFs() {
+  const container = document.getElementById("cardContainer");
+  container.innerHTML = "";
+  db.ref("pdfs").once("value", snapshot => {
+    snapshot.forEach(child => {
+      const pdf = child.val();
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <h3>${pdf.title}</h3>
+        <button onclick="deletePDF('${child.key}')">Delete</button>
+      `;
+      container.appendChild(card);
+    });
+  });
+}
+
+function deletePDF(key) {
+  if(confirm("Are you sure you want to delete this PDF?")){
+    db.ref("pdfs/" + key).remove(err => {
+      if(!err){
+        alert("Deleted!");
+        loadPDFs();
+      }
+    });
+  }
+}
+
+window.onload = loadPDFs;
+</script>
+
+</body>
+</html>

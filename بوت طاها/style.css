@@ -1,0 +1,270 @@
+@import url('https://fonts.googleapis.com/css2?family=Luxurious+Script&family=Macondo&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Macondo", cursive;
+    text-transform: capitalize;
+    box-sizing: border-box;
+}
+
+body{
+    scroll-behavior: smooth;
+background-color: #11203D;
+background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 800 800'%3E%3Cg %3E%3Ccircle fill='%2311203D' cx='400' cy='400' r='600'/%3E%3Ccircle fill='%231d2b49' cx='400' cy='400' r='500'/%3E%3Ccircle fill='%23293755' cx='400' cy='400' r='400'/%3E%3Ccircle fill='%23354361' cx='400' cy='400' r='300'/%3E%3Ccircle fill='%23414f6d' cx='400' cy='400' r='200'/%3E%3Ccircle fill='%234D5C7A' cx='400' cy='400' r='100'/%3E%3C/g%3E%3C/svg%3E");
+background-attachment: fixed;
+background-size: cover;
+}
+
+.main{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 70px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 110vh;
+    flex-wrap: wrap; /* مهم للشاشات الصغيرة */
+}
+
+.main .info{
+    flex: 1 1 400px; /* يسمح للعرض بالتكيف */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.main .info .title{
+    font-size: 4em;
+    letter-spacing: 5px;
+    color: azure;
+    display: inline-block;
+    padding: 10px;
+    text-shadow: 0px 0px 20px #043675;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid #043675;
+    width: 0;
+    animation: typing 5s steps(19, end) infinite, blinkCursor 0.7s step-end infinite;
+}
+
+.choices{
+    display: flex;
+    gap: 30px;
+    padding-top: 40px;
+    flex-wrap: wrap; /* يسمح بالتحويل للصف الثاني إذا ضاق المكان */
+    justify-content: center;
+}
+
+.choice-pdf, .choice-record{
+    font-size: 2em;
+    padding: 10px 70px;
+    border-radius: 10px;
+    border: 3px solid #043675;
+    transition: 0.4s ease-in-out;
+    text-align: center;
+    cursor: pointer;
+}
+
+.choice-pdf{
+    color: white;
+    background-color: #043675;
+    box-shadow: 0px 0px 20px #81abff;
+}
+.choice-pdf:hover{
+    background-color: white;
+    border-color: #043675;
+    color: #043675;
+}
+
+.choice-record{
+    color: #043675;
+    background-color: white;
+    box-shadow: 0px 0px 20px #043675;
+}
+.choice-record:hover{
+    background-color: #043675;
+    border-color: #fff;
+    color: #fff;
+}
+
+a{
+    text-decoration: none;
+}
+
+.logo{
+    animation: move_logo 2s infinite;
+    transition: 4s ease-in-out;
+}
+
+@keyframes move_logo{
+  0% { transform: translateY(50px); }
+  50% { transform: translateY(0px); }
+  100% { transform: translateY(50px); }
+}
+
+/* typing + deleting */
+@keyframes typing {
+  0%   { width: 0; }
+  40%  { width: 16ch; }
+  60%  { width: 16ch; }
+  100% { width: 0; }
+}
+
+/* blinking cursor */
+@keyframes blinkCursor {
+  0%, 100% { border-color: transparent; }
+  50%      { border-color: #043675; }
+}
+
+/* RESPONSIVE */
+@media(max-width:1275px){
+    .main{
+        flex-direction: column;
+        padding: 100px 50px;
+        height: auto;
+    }
+    .main .info .title {
+        font-size: 3em;
+        letter-spacing: 4px;
+    }
+    @keyframes typing {
+      0%   { width: 0; }
+      40%  { width: 16ch; }
+      60%  { width: 16ch; }
+      100% { width: 0; }
+    }
+}
+
+@media(max-width:701px){
+    .choices{
+        flex-direction: column;
+        gap: 20px;
+    }
+    .choice-pdf, .choice-record{
+       
+        margin: auto;
+        font-size: 1.8em;
+       
+    }
+    .main .info{
+        width: 90%;
+        max-width: 400px;
+        padding: 0;
+    }
+    .main .info .title {
+        font-size: 2.5em;
+        letter-spacing: 2px;
+    }
+}
+@media(max-width:550px){
+    .logo{
+        width: 20em;
+    }
+}
+@media (max-width: 401px) {
+    .choice-pdf, .choice-record {
+        margin: auto;
+        font-size: 1.3em;
+
+    }
+    .main .info .title {
+        font-size: 2em;
+        letter-spacing: 2px;
+    }
+    .logo{
+        width: 15em;
+    }
+    .main{
+        padding: 0;
+      padding-bottom: 100px;
+    }
+}
+@media (max-width: 301px) {
+    .main .info .title {
+        font-size: 1.5em;
+        letter-spacing: 2px;
+    }
+}
+header{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 40px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+header .developer{
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+header .developer p{
+    color: white;
+    word-spacing: 4px;
+    font-size: 1.3em;
+}
+header .developer p a{
+    color: rgb(0, 81, 255);
+    padding-left: 10px;
+    padding-right: 10px;
+}
+header .developer a i{
+    color: white;
+    font-size: 1.8em;
+    transition: .3s ease-in-out;
+}
+header .developer a i:hover{
+    scale: 1.2;
+}
+.dentawy{
+       display: flex;
+    gap: 30px;
+    align-items: center;
+}
+.dentawy p{
+       color: white;
+    word-spacing: 4px;
+    font-size: 1.3em;
+}
+header .dentawy p a{
+    color: #0055ff;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+header .dentawy a i{
+    color: white;
+    font-size: 1.8em;
+    transition: .3s ease-in-out;
+}
+header .dentawy a i:hover{
+    scale: 1.2;
+}
+@media(max-width:975px){
+    header{
+        justify-content: center;
+        gap: 30px;
+    }
+}
+@media(max-width:621px){
+    header{
+        font-size: .8em;
+    }
+    .main{
+        padding-top: 20px;
+    }
+    .developer,.dentawy{
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+@media(max-width:407px){
+    header{
+        font-size: .7em;
+        padding: 0;
+        padding-top: 10px;
+    }
+}
